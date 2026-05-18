@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>綠園 理貨系統入口網</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --secondary: #10b981;
+            --secondary-hover: #059669;
+            --bg-gradient: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background elements */
+        .bg-shape {
+            position: absolute;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: float 10s infinite ease-in-out alternate;
+        }
+
+        .shape-1 {
+            top: -10%;
+            right: -5%;
+            width: 400px;
+            height: 400px;
+            background: #a78bfa;
+            border-radius: 50%;
+        }
+
+        .shape-2 {
+            bottom: -10%;
+            left: -5%;
+            width: 500px;
+            height: 500px;
+            background: #818cf8;
+            border-radius: 50%;
+            animation-delay: -5s;
+        }
+
+        .shape-3 {
+            top: 40%;
+            left: 30%;
+            width: 300px;
+            height: 300px;
+            background: #34d399;
+            border-radius: 50%;
+            animation-delay: -2s;
+            opacity: 0.4;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) scale(1);
+            }
+
+            100% {
+                transform: translateY(-20px) scale(1.05);
+            }
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #111827;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            body {
+                padding: 1rem;
+            }
+        }
+
+        .category-section {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .category-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f3f4f6;
+        }
+
+        .category-header i {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .category-header h2 {
+            font-size: 1.8rem;
+            color: var(--text-main);
+        }
+
+        .module-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .module-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 0.2rem;
+            padding-left: 0.5rem;
+            border-left: 4px solid #e5e7eb;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .link-btn {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 0.8rem;
+            background: #ffffff;
+            color: #4b5563;
+            text-decoration: none;
+            padding: 1rem 1.2rem;
+            border-radius: 12px;
+            font-weight: 500;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+        }
+
+        .link-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .link-btn.single-item {
+            grid-column: 1 / -1;
+            background: linear-gradient(to right, #ffffff, #f9fafb);
+        }
+
+        .link-btn i {
+            font-size: 1.2rem;
+            color: #9ca3af;
+            transition: color 0.3s ease;
+            width: 24px;
+            text-align: center;
+        }
+
+        .link-btn:hover i {
+            color: var(--primary);
+        }
+
+        .link-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .link-btn:hover::after {
+            transform: translateX(100%);
+        }
+
+        /* Specific colors for specific categories if needed */
+        .category-service .category-header i {
+            color: var(--secondary);
+        }
+
+        .category-service .link-btn:hover {
+            color: var(--secondary);
+            border-color: var(--secondary);
+        }
+
+        .category-service .link-btn:hover i {
+            color: var(--secondary);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Minimal scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-shape shape-1"></div>
+    <div class="bg-shape shape-2"></div>
+    <div class="bg-shape shape-3"></div>
+
+    <header>
+        <h1>綠園 理貨系統整合平台</h1>
+        <p>集中管理各項作業模組，提升作業效率</p>
+    </header>
+
+    <div class="container">
+        <!-- 理貨區塊 -->
+        <section class="category-section category-sort">
+            <div class="category-header">
+                <i class="fa-solid fa-boxes-packing"></i>
+                <h2>理貨作業</h2>
+            </div>
+
+            <div class="module-group">
+                <div class="module-title">產銷履歷 / 溯源</div>
+                <div class="button-grid">
+                    <a href="https://taftprocess.moa.gov.tw/" class="link-btn"><i class="fa-solid fa-leaf"></i>
+                        產銷履歷加工系統</a>
+                    <a href="https://kr.amot.org.tw/accounts/login/?next=/keyin/query/" class="link-btn"><i
+                            class="fa-solid fa-qrcode"></i> 溯源出貨專用平台</a>
+                </div>
+            </div>
+
+            <div class="module-group">
+                <div class="module-title">紀錄表模組</div>
+                <div class="button-grid">
+                    <a href="https://docs.google.com/spreadsheets/d/1k9_wrJgm9rBrO1B9EJrtON5qIp-_EhrEq-VPKkT29mI/edit?gid=250034504#gid=250034504"
+                        class="link-btn single-item"><i class="fa-solid fa-clipboard-list"></i> 團膳紀錄表</a>
+                </div>
+            </div>
+
+            <div class="module-group">
+                <div class="module-title">貼紙模組</div>
+                <div class="button-grid">
+                    <a href="https://tzumin0044.github.io/Organic-Sticker/" class="link-btn"><i
+                            class="fa-solid fa-tag"></i> 有機貼</a>
+                    <a href="https://tzumin0044.github.io/stickerA/" class="link-btn"><i class="fa-solid fa-tag"></i>
+                        大盤大、大買家</a>
+                    <a href="https://tzumin0044.github.io/Product-Sticker/" class="link-btn"><i
+                            class="fa-solid fa-tag"></i> 品規貼</a>
+                    <a href="https://tzumin0044.github.io/lettuce/" class="link-btn"><i class="fa-solid fa-tag"></i>
+                        生菜貼</a>
+                </div>
+            </div>
+
+            <div class="module-group">
+                <div class="module-title">計算模組</div>
+                <div class="button-grid">
+                    <a href="https://materialdep-cloud.github.io/-weight/" class="link-btn single-item"><i
+                            class="fa-solid fa-calculator"></i> 秤重計算機</a>
+                    <a href="https://www.appsheet.com/start/d9162d8f-8a42-4d81-9de6-faac5d692eee?platform=desktop#appName=%E5%8C%85%E6%9D%90%E8%A8%88%E7%AE%97%E6%A9%9F-297578037-24-01-22&vss=H4sIAAAAAAAAA6tWKstMLQ8uSUzOVrKKrkbwvFMrlayUqmOUQioLUmOUrGKUnPPzSoryc2KUdGKU_BJzIYJPe1qfzZ3wtGP6i4UrYpRqlWpjdWBmlKQWK1lVk26EFeWu0FHKTEnNK8lMy0wtApkH0g00B6oXKA3SCRRA1qdUq6OUW1qSmJSTCnY8UF9tLVAsLT-5tDg1JQzoJDKdUuyZ51pRkJiX4pufAjQ2LTGnOLUWAIzrAhh5AQAA&view=%E5%8C%85%E6%9D%90%E5%88%97%E8%A1%A8"
+                        class="link-btn single-item"><i class="fa-solid fa-calculator"></i> 包材計算機</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 客服區塊 -->
+        <section class="category-section category-service">
+            <div class="category-header">
+                <i class="fa-solid fa-headset"></i>
+                <h2>客服作業</h2>
+            </div>
+
+            <div class="module-group">
+                <div class="module-title">系統連結</div>
+                <div class="button-grid">
+                    <a href="http://211.20.7.168:81/Home/LogIn" class="link-btn"><i class="fa-solid fa-server"></i>
+                        ERP</a>
+                    <a href="https://docs.google.com/spreadsheets/d/1bvkcHoc21QuGkPGu8MUdPGIODV9DFsm8P6jO2ZgEJW0/edit?gid=0#gid=0"
+                        class="link-btn"><i class="fa-solid fa-comments"></i> 綠園_客服</a>
+                    <a href="https://access.line.me/oauth2/v2.1/login?returnUri=%2Foauth2%2Fv2.1%2Fauthorize%2Fconsent%3Fresponse_type%3Dcode%26client_id%3D1576775644%26redirect_uri%3Dhttps%253A%252F%252Faccount.line.biz%252Flogin%252Fline-callback%253FredirectUri%253Dhttps%25253A%25252F%25252Fchat.line.biz%25252FU1bc5cb22b7961268c766f69c8e86c23d%2526disableLineAutoLogin%253Dfalse%26scope%3Dprofile%26state%3DlqT52mCU0gVPlyWdyJBqIO0MeYS6VD0&loginChannelId=1576775644&loginState=D2qZUuLCbTc3kN9dsc1odC#/"
+                        class="link-btn"><i class="fa-solid fa-comments"></i> line@</a>
+                    <a href="https://docs.google.com/spreadsheets/d/1hDmqx-L9vcLTJOTk2nBSe6vtmXEbpwRTX7O-Hhts670/edit?gid=1274389442#gid=1274389442"
+                        class="link-btn"><i class="fa-solid fa-clipboard-list"></i> 司機總量紀錄表</a>
+                </div>
+            </div>
+
+            <div class="module-group">
+                <div class="module-title">訂單轉換模組</div>
+                <div class="button-grid">
+                    <a href="https://docs.google.com/spreadsheets/d/154QQm9zpJnBEnec-oVMDA0kG1K7Iso4E7XnrYJWnHQQ/edit?gid=0#gid=0"
+                        class="link-btn"><i class="fa-solid fa-file-invoice"></i> 築間用</a>
+                    <a href="https://docs.google.com/spreadsheets/d/1cnDxMJ6WOJ2GS9rYM2fBJP4aCtR6PRTa9TlZ6KscekY/edit?gid=0#gid=0"
+                        class="link-btn"><i class="fa-solid fa-file-invoice"></i> 森森用</a>
+                </div>
+            </div>
+
+            <div class="module-group">
+                <div class="module-title">表單模組</div>
+                <div class="button-grid">
+                    <a href="https://docs.google.com/spreadsheets/d/1DNd_dFxFJ1O7_SpG-i96i4yBvTALh7dETcZJrzmO3D8/edit?gid=1426323131#gid=1426323131"
+                        class="link-btn"><i class="fa-solid fa-pen-to-square"></i> 改單登記</a>
+                    <a href="https://docs.google.com/spreadsheets/d/1wDi-laxaYg8tHkY_lAEOAain75VlaVlwzp8VftXzbN8/edit?gid=0#gid=0"
+                        class="link-btn"><i class="fa-solid fa-user-pen"></i> 基本資料修改登記</a>
+                </div>
+            </div>
+
+            <div class="module-group">
+                <div class="module-title">製令模組</div>
+                <div class="button-grid">
+                    <a href="https://tzumin0044.github.io/MO/" class="link-btn single-item"><i
+                            class="fa-solid fa-file-contract"></i>
+                        製令單生成</a>
+                </div>
+            </div>
+
+            <div class="module-group">
+                <div class="module-title">路線模組</div>
+                <div class="button-grid">
+                    <a href="https://www.google.com/maps/d/u/0/edit?mid=1L0vBEtLFOFsV_Qm90qjRkiVvYbKwae0&ll=24.003786565434794%2C120.42140303590074&z=11"
+                        class="link-btn"><i class="fa-solid fa-truck"></i> 上午</a>
+                    <a href="https://www.google.com/maps/d/u/0/viewer?ll=24.12781105277923%2C120.65685350000003&z=12&mid=1fFgubqy5dqDPpkfcgGSQrET48pkhzf8"
+                        class="link-btn"><i class="fa-solid fa-truck"></i> 下午</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 強制讓所有按鈕都在新分頁開啟
+        document.querySelectorAll('a').forEach(function (link) {
+            link.setAttribute('target', '_blank');
+        });
+    </script>
+</body>
+
+</html>
